@@ -1,0 +1,133 @@
+﻿<Window x:Class="PubApp_WPF8.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PubApp_WPF8" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="Pub" Height="450" Width="800" Background="#E0CCBE" Icon="Images\beer.ico">
+    <Grid Margin="15" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="12*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"  >
+            <ComboBox Foreground="#3C3633" FontSize="15" FontWeight="Bold"
+                      ItemsSource="{Binding AllBeers}" DisplayMemberPath="Name"  
+                      Name="myComboBox">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedCommand}" 
+                                           CommandParameter="{Binding ElementName=myComboBox,Path=SelectedItem}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,10" Background="#747264" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid  Grid.Column="0"  Margin="20" Background="White">
+                <Image HorizontalAlignment="Center" Source="{Binding Beer.Image}"></Image>
+            </Grid>
+            <Grid Grid.Column="1"  Margin="20" >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1.7*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Label FontSize="25" Foreground="#EEEDEB">Name</Label>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <Label FontSize="25" Foreground="#EEEDEB">Price</Label>
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="0">
+                    <Label FontSize="25" Foreground="#EEEDEB">Volume</Label>
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="+"  Margin="0,10" Foreground="#EEEDEB"  FontSize="20" Background="#3E3232" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding PlusCommand}" 
+                                                         CommandParameter="{Binding ElementName=myComboBox,Path=SelectedItem}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <TextBlock Grid.Column="1" Text="{Binding Beer.Count,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                           Foreground="DarkRed" FontSize="25" VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" FontWeight="Bold"></TextBlock>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <TextBlock Text="{Binding Beer.Name}" FontSize="25" Margin="0,8,0,0" Foreground="#EEEDEB"></TextBlock>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBlock Text="{Binding Beer.Price}" FontSize="25" Margin="0,8,0,0" Foreground="#EEEDEB"></TextBlock>
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <TextBlock Text="{Binding Beer.Volume}" FontSize="25" Margin="0,8,0,0" Foreground="#EEEDEB"></TextBlock>
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="-"  Margin="0,10" Foreground="#EEEDEB"  FontSize="20" Background="#3E3232" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding MinusCommand}" 
+                                                         CommandParameter="{Binding ElementName=myComboBox,Path=SelectedItem}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
+               
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="0,0,20,0" VerticalAlignment="Center">
+                <Button Foreground="#EEEDEB" Background="#3C3633"  FontSize="25" Content="Buy" Height="55">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding BuyCommand}" 
+                                                         CommandParameter="{Binding ElementName=myComboBox,Path=SelectedItem}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+           <!--<StackPanel Grid.Column="1" Margin="0,0,0,0" VerticalAlignment="Center">
+                <Button Foreground="#EEEDEB" Background="#3C3633"  FontSize="25" Content="Reset" Height="55"/>
+            </StackPanel>-->
+            <StackPanel Grid.Column="2" Margin="20,0,0,0" VerticalAlignment="Center">
+                <Button Foreground="#EEEDEB" Background="#3C3633"  FontSize="25" Content="Show History" Height="55">
+                    <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding ShowHistoryCommand}" 
+                                                         CommandParameter="{Binding ElementName=myComboBox,Path=SelectedItem}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
